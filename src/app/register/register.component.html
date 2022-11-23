@@ -1,0 +1,121 @@
+<div class="container">
+    <h1>Register your company!</h1>
+    <!-- Form -->
+    <form id="form" [formGroup]="registerForm" (ngSubmit)="register()">
+        <!-- Full Name -->
+        <div class="form-group">
+            <label for="companyName">Company Name</label>
+            <input type="text" id="companyName" class="form-control" formControlName="companyName" name="name"
+                placeholder="Enter Company Name" minlength="3" maxlength="50">
+
+            <div *ngIf="registerForm.controls.companyName.touched && registerForm.controls.companyName.dirty">
+                <p class="text-danger" *ngIf="registerForm.controls.companyName.errors?.required">
+                    This field is required!
+                </p>
+                <p class="text-danger" *ngIf="registerForm.controls.companyName.errors?.minlength">
+                    The value you entered is
+                    {{registerForm.controls.companyName.errors?.minlength.actualLength}}
+                    characters long!
+                    It must be at least
+                    {{registerForm.controls.companyName.errors?.minlength.actualLength}}
+                    characters long.
+                </p>
+            </div>
+        </div>
+
+        <!-- Company location -->
+        <div class="form-group">
+            <label for="place">Company location</label>
+            <input type="text" class="form-control" id="place" formControlName="place" name="place"
+                placeholder="Enter Company location" minlength="3" maxlength="30">
+            <div *ngIf="registerForm.controls.place.touched && registerForm.controls.place.dirty">
+                <p class="text-danger" *ngIf="registerForm.controls.place.errors?.required">
+                    This field is required!
+                </p>
+                <p class="text-danger" *ngIf="registerForm.controls.place.errors?.minlength">
+                    The value you entered is
+                    {{registerForm.controls.place.errors?.minlength.actualLength}}
+                    characters long!
+                    It must be at least
+                    {{registerForm.controls.place.errors?.minlength.actualLength}}
+                    characters long.
+                </p>
+            </div>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="form-group">
+            <label for="phone">Mobile Number</label>
+            <input type="tel" class="form-control" id="phone" name="phone" formControlName="contact"
+                placeholder="0987654321">
+            <div *ngIf="registerForm.controls.contact.touched && registerForm.controls.contact.dirty">
+                <div class="text-danger" *ngIf="registerForm.controls.contact.errors?.required">Mobile Number is
+                    required.</div>
+                <div class="text-danger" *ngIf="registerForm.controls.contact.errors?.pattern">Please, Enter 10 digit
+                    Mobile Number.</div>
+            </div>
+        </div>
+
+        <!-- Website URL -->
+        <div class="form-group">
+            <label for="website">Website URL</label>
+            <input type="url" class="form-control" id="website" name="website" formControlName="website"
+                placeholder="https://test.com">
+            <div *ngIf="registerForm.controls.website.touched && registerForm.controls.website.dirty">
+                <p class="text-danger" *ngIf="registerForm.controls.website.errors?.required">
+                    Please provide url!
+                </p>
+                <p class="text-danger" *ngIf="registerForm.controls.website.errors?.pattern">
+                    Please provide valid url!
+                </p>
+            </div>
+        </div>
+
+        <!-- Email Address -->
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" class="form-control" id="email" name="email" formControlName="email"
+                placeholder="email@address.com">
+            <div *ngIf="registerForm.controls.email.touched && registerForm.controls.email.dirty">
+                <p class="text-danger" *ngIf="registerForm.controls.email.errors?.required">
+                    Please provide email!
+                </p>
+                <p class="text-danger" *ngIf="registerForm.controls.email.errors?.email">
+                    You need to enter valid email!
+                </p>
+            </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+            <label for="password1">Password</label>
+            <input type="password" class="form-control" id="password1" formControlName="password"
+                placeholder="Create Password (Min. 8 characters)" title="">
+            <div *ngIf="registerForm.controls.password.touched && registerForm.controls.password.dirty">
+                <p class="text-danger" *ngIf="registerForm.controls.password.errors?.required">
+                    This field is required!
+                </p>
+                <p class="text-danger" *ngIf="registerForm.controls.password.errors?.pattern">
+                    Please include at least 1 uppercase character, 1 lowercase character, and 1 number.
+
+                </p>
+            </div>
+
+        </div>
+        <!-- Confirm Password -->
+        <div class="form-group">
+            <label for="password2">Confirm Password</label>
+            <input type="password" class="form-control" id="password2" formControlName="confirmPassword"
+                placeholder="Confirm Password" name="password">
+            <div *ngIf="registerForm.controls.confirmPassword.touched && registerForm.controls.confirmPassword.dirty">
+                <p class="text-danger" *ngIf="registerForm.controls.confirmPassword.errors?.required">
+                    This field is required!
+                </p>
+                <p class="text-danger" *ngIf="registerForm.controls.confirmPassword.errors?.pattern">
+                    Please include at least 1 uppercase character, 1 lowercase character, and 1 number.
+                </p>
+            </div>
+        </div>
+        <button type="submit" [disabled]="!registerForm.valid">Register</button>
+    </form>
+</div>

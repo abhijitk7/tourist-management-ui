@@ -1,0 +1,115 @@
+<div class="container">
+
+
+    <div *ngIf="isAPIError" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Something went wrong!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div *ngIf="!isLoading && companies.length<1" class="d-flex align-items-center justify-content-center"
+        style="height: 450px">
+        There is no tourist company listed yet!
+    </div>
+
+    <div *ngIf="isLoading" class="d-flex align-items-center justify-content-center" style="height: 450px">
+        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <div class="row row-cols-3 searchBox">
+        <div class="col"></div>
+        <div class="col">
+            <input type="text" class="form-control" placeholder="Search by company name" name="searchText"
+                [(ngModel)]="searchText" (keyup)="searchCompany($any($event.target).value)" />
+
+        </div>
+        <div class="col">
+        </div>
+    </div>
+
+    <div *ngIf="!isLoading && companies.length>0">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Company Id
+                    </th>
+                    <th>
+                        website
+                    </th>
+                    <th>
+                        Branch
+                    </th>
+                    <th>
+                        contact
+                    </th>
+                    <th>
+                        email
+                    </th>
+                    <th>
+                        View details
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let company of companies">
+                    <td>{{company.id}}</td>
+                    <td>{{company.website}}</td>
+                    <td>
+                        {{company.place }}
+                    </td>
+                    <td>
+                        {{company.contact }}
+                    </td>
+                    <td>
+                        {{company.email }}
+                    </td>
+                    <td>
+                        <button class="btn btn btn-primary" (click)="openTouristPakages(company)" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop">
+                            Tourist Packages
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Tourist packages</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        (click)="closePopUp()"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="description" class="col-sm-2 col-form-label">Tourist destination</label>
+                        <div class="col-sm-12">
+                            <p *ngIf="selectedCompany.tariffs.length>0" class="text-left">
+                                {{selectedCompany.tariffs[0].place.placeName}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="col-sm-4 col-form-label">Cost</label>
+                        <div class="col-sm-12">
+                            <p *ngIf="selectedCompany.tariffs.length>0" class="text-left">
+                                {{selectedCompany.tariffs[0].cost.toString() | currency:'INR':'symbol':'3.1-1'}}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" (click)="closePopUp()" class="btn btn-secondary" id="close"
+                        data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
