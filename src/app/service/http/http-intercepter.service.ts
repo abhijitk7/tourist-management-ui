@@ -11,7 +11,7 @@ export class HttpIntercepterService implements HttpInterceptor {
     request = request.clone({
       setHeaders: {
         Authorization:
-          "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJJc2FpX0hhcnZleUBnbWFpbC5jb20iLCJleHAiOjE2NjkyMjg5MDd9.mdTQIfbZnqvgyEBVY0Ml3u8gqNTLMFyYeNxfyPmv1GwYL3lscSwxT063ZKfOb6j6dX1Vog3oMrznVaoWTLeDZw",
+          "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJSb2JiLkNyaXN0QGdtYWlsLmNvbSIsImV4cCI6MTY2OTQ4MjM1OX0.yWUhhMtiT09Dt36XdDLQxxcU2By_YmkJeu_MKcqH9Dzefk5hL2RRV7pdLwL6-lrMwFxuA0M7UDm4Nj4azmMw3g",
       },
     })
 

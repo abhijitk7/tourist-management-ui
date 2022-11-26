@@ -37,8 +37,32 @@ export class SearchTouristPlacesComponent implements OnInit {
   }
 
   openTouristPakages(company: Company) {
-    console.dir(company)
     this.selectedCompany=company;
+  }
+
+  getImagePath(touristDestination:string):String{
+    let imagePath:String;
+    switch(touristDestination){
+      case "Andaman":
+        imagePath="../../assets/andaman.jpeg";
+        break;
+      case "Dubai":
+        imagePath="../../assets/Dubai.jpeg";
+        break;
+      case "Thailand":
+        imagePath="../../assets/Thailand.jpeg";
+        break;
+      case "Singapore":
+        imagePath="../../assets/Singapore.jpeg";
+        break;
+      case "Malaysia":
+        imagePath="../../assets/Malaysia.jpeg";
+        break;
+      default:
+        imagePath="../../assets/Dubai.jpeg";
+        break;
+    }
+    return imagePath;
   }
 
   clearAndCloseForm(needApiCall: boolean = true) {
