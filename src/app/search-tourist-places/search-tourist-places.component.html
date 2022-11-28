@@ -69,7 +69,8 @@
                     <td>
                         <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
                             (click)="openTouristPakages(company)" data-bs-target=".multi-collapse" aria-expanded="false"
-                            aria-controls="multiCollapseExample1 multiCollapseExample2">Tourist Packages</button>
+                            aria-controls="multiCollapseExample1 multiCollapseExample2">Packages<i
+                                class="bi bi-info-square-fill"></i></button>
                     </td>
                 </tr>
             </tbody>
@@ -77,67 +78,20 @@
     </div>
 
 
-
-
-
-    <!--######################################################################################################################################################################## -->
-
-    <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Tourist packages</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        (click)="closePopUp()"></button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="mb-6">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../../assets/andaman.jpeg" class="card-img-top" alt="Andaman and Nocobar">
-                            <div class="card-body">
-                                <h5 class="card-title">Package Cost</h5>
-                                <p class="card-text" *ngIf="selectedCompany.tariffs.length>0">
-                                    {{selectedCompany.tariffs[0].cost.toString() | currency:'INR':'symbol':'3.1-1'}}</p>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="mb-6">
-                        <div class="card" style="width: 18rem;">
-                            <img src="../../assets/Dubai.jpeg" class="card-img-top" alt="Andaman and Nocobar">
-                            <div class="card-body">
-                                <h5 class="card-title">Package Cost</h5>
-                                <p class="card-text" *ngIf="selectedCompany.tariffs.length>0">
-                                    {{selectedCompany.tariffs[0].cost.toString() | currency:'INR':'symbol':'3.1-1'}}</p>
-                            </div>
+    <div class="row" *ngIf=" selectedCompany.tariffs.length>0">
+        <div class="card-group">
+            <div class="col" *ngFor="let tariff of selectedCompany.tariffs">
+                <div class="collapse multi-collapse" id="multiCollapseExample1">
+                    <div class="card" style="width: 18rem;">
+                        <img [attr.src]="getImagePath(tariff.place.placeName)" class="card-img-top"
+                            alt="Andaman and Nocobar">
+                        <div class="card-body">
+                            <h5 class="card-title">Package Cost</h5>
+                            <p class="card-text">
+                                {{tariff.cost.toString() | currency:'INR':'symbol':'3.1-1'}}</p>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" (click)="closePopUp()" class="btn btn-secondary" id="close"
-                        data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-
-
-<div class="row" *ngIf=" selectedCompany.tariffs.length>0">
-    <div class="col" *ngFor="let tariff of selectedCompany.tariffs">
-        <div class="collapse multi-collapse" id="multiCollapseExample1">
-            <div class="card" style="width: 18rem;">
-                <img [attr.src]="getImagePath(tariff.place.placeName)" class="card-img-top" alt="Andaman and Nocobar">
-                <div class="card-body">
-                    <h5 class="card-title">Package Cost</h5>
-                    <p class="card-text">
-                        {{tariff.cost.toString() | currency:'INR':'symbol':'3.1-1'}}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>

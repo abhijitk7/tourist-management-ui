@@ -1,1 +1,105 @@
-<p>manage-company-tourist-places works!</p>
+<div class="container">
+
+
+    <div class="card" style="width: 18rem;">
+        <img src="../../assets/travel-agency-logo.jpeg" class="card-img-top" alt="...">
+        <div class="card-body" *ngIf="companyDetails">
+            <h5 class="card-title">{{companyDetails.branchName}}</h5>
+            <div class="card-text">
+                <ol class="list-group list-group-numbered">
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Website</div>
+                            {{companyDetails.website}}
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Contact</div>
+                            {{companyDetails.contact}}
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Email</div>
+                            {{companyDetails.email}}
+                        </div>
+                    </li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="container" *ngIf="companyDetails">
+
+
+    <form [formGroup]="addPackageForm">
+        <table lass="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tourist Place</th>
+                    <th scope="col">Cost</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody formArrayName="Rows">
+                <tr *ngFor="let obj of formArr.controls; let i = index; let l = last" [formGroupName]="i">
+                    <td>{{i+1}}</td>
+                    <td>
+                        <div class="input-group has-validation">
+
+                            <span class="input-group-text" id="inputGroupPrepend3"><i class="bi bi-geo-fill"></i></span>
+
+                            <select class="form-select" required="" aria-label="Tourist Places"
+                                formControlName="touristPlaceControl" [compareWith]="compareFn">
+                                <option [ngValue]={}>Please select</option>
+                                <option [ngValue]="place" *ngFor="let place of touristPlaces">
+                                    {{place.placeName}}
+                                </option>
+                            </select>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="input-group">
+                            <span class="input-group-text" id="inputGroupPrepend3"><i
+                                    class="bi bi-currency-rupee"></i></span>
+                            <input type="number" class="form-control" id="cost" formControlName="priceControl">
+                        </div>
+                    </td>
+
+                    <td>
+                        <i class="bi bi-dash-circle-fill" style="font-size:30px;color: #cc3240;"
+                            (click)="deleteRow(i)"></i>
+                        <!--  <button *ngIf="formArr.controls.length > 1" (click)="deleteRow(i)" class="btn btn-danger">
+                            Delete
+                        </button> -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <button type="btn btn-primary" (click)="addNewPackage()" class="btn btn-primary"><i
+                    class="bi bi-plus-circle-fill" style="font-size: 18px;"></i>Add</button>
+        </div>
+        <div class="col">
+            <button class="btn btn-success"><i class="bi bi-server" style="font-size: 18px;"></i>Save</button>
+        </div>
+    </div>
+
+</div>
+
+<br />
+<br />
+
+<!-------------------- ------------->
+
+
+
+<pre>{{addPackageForm.value | json}}</pre>
