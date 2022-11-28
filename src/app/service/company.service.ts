@@ -25,4 +25,8 @@ export class CompanyService {
     return this.http.get<TouristPlacesResponse>(`${API_URL}/tourism/api/v1/places`);
   }
 
+  updateCompanyTariffs(companyDetails:Company){
+    return this.http.put<Company>(`${API_URL}/tourism/api/v1/update-tariff/`+companyDetails.id,companyDetails);
+  }
+
 }

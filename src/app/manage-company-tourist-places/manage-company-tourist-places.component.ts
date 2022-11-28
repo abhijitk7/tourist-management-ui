@@ -67,8 +67,11 @@ export class ManageCompanyTouristPlacesComponent implements OnInit {
 
   addRow(tarrif:CompanyTariffs) {
     return this.formBuilder.group({
-      touristPlaceControl: [tarrif.place,Validators.required],
-      priceControl: [tarrif.cost,Validators.required]
+      id:[tarrif.id],
+      companyId:[tarrif.companyId],
+      place: [tarrif.place,Validators.required],
+      cost: [tarrif.cost,Validators.required],
+      lastUpdated:[new Date]
     });
   }
 
@@ -76,7 +79,7 @@ export class ManageCompanyTouristPlacesComponent implements OnInit {
     let tarrif:any={
       place:{} ,
       cost: 0,
-      companyId: ''
+      companyId: this.companyId
     }
     
     this.formArr.push(this.addRow(tarrif));
@@ -89,6 +92,20 @@ export class ManageCompanyTouristPlacesComponent implements OnInit {
 
   compareFn(c1: any, c2:any): boolean {     
     return c1 && c2 ? c1.id === c2.id : c1 === c2; 
+  }
+
+
+  onSave(){
+    this.companyDetails.tariffs.splice(0); 
+    this.companyDetails.tariffs=this.addPackageForm.value.Rows;
+    console.log('Data to server : ', this.companyDetails.tariffs);
+    this.companyService.updateCompanyTariffs(this.companyDetails).subscribe(response=>{
+      console.log(response);
+      console.log("Company details updated successfully");
+    },error=>{
+      console.log("Error occured while updating company details");
+    })
+
   }
 
 }
