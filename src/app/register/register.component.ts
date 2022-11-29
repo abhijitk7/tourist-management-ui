@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core"
 import { FormControl, FormGroup, Validators } from "@angular/forms"
 import { Router } from "@angular/router";
 import { Company } from "../models/company.model"
+import { EventTypes } from "../models/eventTypes.model";
+import { ToastService } from "../service/toast.service";
 import { UserService } from "../service/user.service";
 
 @Component({
@@ -13,7 +15,7 @@ export class RegisterComponent implements OnInit {
 
   registerForm!:FormGroup;
 
-  constructor(private userService:UserService,private router:Router) { }
+  constructor(private userService:UserService,private router:Router,private toastService:ToastService) { }
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
@@ -59,8 +61,9 @@ export class RegisterComponent implements OnInit {
       console.dir(response);
       this.registerForm.reset();
       this.router.navigate(['login']);
+      this.toastService.showToast(EventTypes.Success ,"Hi there!","Company details saved successfully with unique company id "+response.id);
     },error=>{
-      console.dir(error);
+      this.toastService.showToast(EventTypes.Error ,"Hi there!","Error occured while saving company details!");
     })
 
   }

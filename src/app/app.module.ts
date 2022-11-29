@@ -10,7 +10,9 @@ import { SearchTouristPlacesComponent } from "./search-tourist-places/search-tou
 import { ErrorComponent } from "./error/error.component"
 import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http"
-import { HttpIntercepterService } from "./service/http/http-intercepter.service"
+import { HttpIntercepterService } from "./service/http/http-intercepter.service";
+import { ToasterComponent } from './toaster/toaster/toaster.component';
+import { ToastComponent } from './toaster/toast/toast.component'
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { HttpIntercepterService } from "./service/http/http-intercepter.service"
     ManageCompanyTouristPlacesComponent,
     SearchTouristPlacesComponent,
     ErrorComponent,
+    ToasterComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,

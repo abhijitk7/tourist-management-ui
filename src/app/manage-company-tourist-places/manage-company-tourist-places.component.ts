@@ -4,8 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { response } from 'express';
 import { Company } from '../models/company.model';
 import { CompanyTariffs } from '../models/company.tariffs.model';
+import { EventTypes } from '../models/eventTypes.model';
 import { TouristPlaces } from '../models/tourist.places.model';
 import { CompanyService } from '../service/company.service';
+import { ToastService } from '../service/toast.service';
 
 @Component({
   selector: 'app-manage-company-tourist-places',
@@ -18,8 +20,10 @@ export class ManageCompanyTouristPlacesComponent implements OnInit {
   companyDetails:Company;
   touristPlaces:TouristPlaces[];
   addPackageForm!:FormGroup;
+  isLoading:Boolean=true;
+  isPackagesGettingSaved:Boolean=false;
 
-  constructor(private route: ActivatedRoute,private companyService:CompanyService,private formBuilder: FormBuilder) { }
+  constructor(private route: ActivatedRoute,private companyService:CompanyService,private formBuilder: FormBuilder,private toastService: ToastService) { }
 
   ngOnInit(): void {
 
@@ -45,11 +49,14 @@ export class ManageCompanyTouristPlacesComponent implements OnInit {
   }
 
   getTouristPlaces(){
+    this.isLoading=true;
     this.companyService.getAllTouristPlaces().subscribe(response=>{
       this.touristPlaces=response.touristPlaces;
       this.getCompanyDetails();
+      this.isLoading=false;
     },error=>{
       console.error("Error occured while getting list of tourist places")
+      this.toastService.showToast(EventTypes.Error ,"Hi there!","Error occured while getting list of tourist places!");
     })
   }
 
@@ -59,8 +66,8 @@ export class ManageCompanyTouristPlacesComponent implements OnInit {
       this.companyDetails.tariffs.forEach((row) => {
         this.formArr.push(this.addRow(row));
       });
-
     },error=>{
+      this.toastService.showToast(EventTypes.Error ,"Hi there!","Error occured while fetching company details!");
       console.error("Error occured while fetching company details"+error);
     })
   }
@@ -96,16 +103,19 @@ export class ManageCompanyTouristPlacesComponent implements OnInit {
 
 
   onSave(){
+    this.isPackagesGettingSaved=true;
     this.companyDetails.tariffs.splice(0); 
     this.companyDetails.tariffs=this.addPackageForm.value.Rows;
-    console.log('Data to server : ', this.companyDetails.tariffs);
     this.companyService.updateCompanyTariffs(this.companyDetails).subscribe(response=>{
-      console.log(response);
-      console.log("Company details updated successfully");
+      this.isPackagesGettingSaved=false;
+      this.toastService.showToast(EventTypes.Success,"Hi there!","Package details saved successfully!");
     },error=>{
-      console.log("Error occured while updating company details");
+      this.isPackagesGettingSaved=false;
+      this.toastService.showToast(EventTypes.Error ,"Hi there!","Error occured while updating package details!");
     })
 
   }
+
+  
 
 }

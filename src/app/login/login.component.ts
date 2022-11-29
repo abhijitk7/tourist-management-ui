@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginRequest } from '../models/login.model';
+import { ToastService } from '../service/toast.service';
 import { UserService } from '../service/user.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   loginForm!:FormGroup;
 
-  constructor(private userService:UserService,private router:Router) { }
+  constructor(private userService:UserService,private router:Router,private toastService:ToastService) { }
 
   ngOnInit(): void {
     this.loginForm=new FormGroup({
@@ -32,7 +33,7 @@ export class LoginComponent implements OnInit {
       this.loginForm.reset();
       this.router.navigate(['search']);
     },error=>{
-      console.dir(error);
+      this.toastService.showErrorToast("Hi there!","Login attempt failed!")
     })
 
   }

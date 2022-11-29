@@ -1,8 +1,14 @@
 <div class="container">
 
+    <div *ngIf="isLoading" class="d-flex align-items-center justify-content-center" style="height: 450px">
+        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
 
-    <div class="card" style="width: 18rem;">
-        <img src="../../assets/travel-agency-logo.jpeg" class="card-img-top" alt="...">
+    <div class="card" style="width: 30rem;" *ngIf="companyDetails">
+
+        <img src="../../assets/travel-agency-logo.jpeg" class="card-img-top" alt="Travel Company Logo">
         <div class="card-body" *ngIf="companyDetails">
             <h5 class="card-title">{{companyDetails.branchName}}</h5>
             <div class="card-text">
@@ -31,11 +37,13 @@
         </div>
     </div>
 </div>
-<div class="container" *ngIf="companyDetails">
+<br>
+
+<div class="container" *ngIf="companyDetails && !isPackagesGettingSaved">
 
 
     <form [formGroup]="addPackageForm">
-        <table lass="table">
+        <table class="table">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -78,8 +86,6 @@
             </tbody>
         </table>
     </form>
-</div>
-<div class="container">
     <div class="row">
         <div class="col">
             <button type="btn btn-primary" (click)="addNewPackage()" class="btn btn-primary"><i
@@ -90,14 +96,15 @@
                     style="font-size: 18px;"></i>Save</button>
         </div>
     </div>
-
 </div>
+<div *ngIf="isPackagesGettingSaved" class="d-flex align-items-center justify-content-center" style="height: 150px">
+    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+<br>
+<!-------------------- -
 
-<br />
-<br />
-
-<!-------------------- ------------->
 
 
-
-<pre>{{addPackageForm.value | json}}</pre>
+<pre>{{addPackageForm.value | json}}</pre>------------>

@@ -13,7 +13,7 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #c9ced3;
+    background: #d9dbdd;
   }
 
 
@@ -47,7 +47,6 @@ form {
   
   button:hover {
     filter: brightness(200%);
-    background: rgb(22, 22, 22);
   }
   
   button:focus {
