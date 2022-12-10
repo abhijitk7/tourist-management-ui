@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { ADMIN, AUTHORITY, COMPANY_ID, EMAIL, TOKEN } from '../constant/constants';
 import { LoginRequest } from '../models/login.model';
 import { AuthenticationService } from '../service/authentication.service';
 import { ToastService } from '../service/toast.service';
@@ -36,23 +37,19 @@ export class LoginComponent implements OnInit {
       this.loginForm.reset();
       const helper = new JwtHelperService();
       const token=res.headers.get('token');
-      localStorage.setItem("token",token||'');
+      sessionStorage.setItem(TOKEN,token||'');
       
-
       const decodedToken = helper.decodeToken(token||'');
-      localStorage.setItem("email",decodedToken.email||'');
-      localStorage.setItem("authority",decodedToken.authority||'');
-      
-      decodedToken.role.forEach(authority => {
-        if(authority.authority==='ADMIN'){
-          this.isAdmin=true
-          return;
-        }
-      }); 
-      if(this.isAdmin){
+      sessionStorage.setItem(EMAIL,decodedToken.email||'');
+      sessionStorage.setItem(AUTHORITY,decodedToken.authority||'');
+      sessionStorage.setItem(COMPANY_ID,decodedToken.companyId||'');
+
+      let loggedInUserAuthority=this.authenticationService.getLoggedInUserAuthority();
+
+      if(loggedInUserAuthority===ADMIN){
         this.router.navigate(['search']);
       }else{
-        this.router.navigate(['company/d3e03f51-4293-497e-bc90-c79534d5570a']);
+        this.router.navigate(['company/'+decodedToken.companyId]);
       }
     },error=>{
       this.toastService.showErrorToast("Hi there!","Login attempt failed!")
