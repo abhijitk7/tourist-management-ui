@@ -37,13 +37,6 @@ export class ManageCompanyTouristPlacesComponent implements OnInit {
     
   }
 
- /* initRows() {
-    return this.formBuilder.group({
-      touristPlaceControl: [null,Validators.required],
-      priceControl: ['0']
-    });
-  }*/
-
   get formArr() {
     return this.addPackageForm.get("Rows") as FormArray;
   }

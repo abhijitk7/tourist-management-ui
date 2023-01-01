@@ -1,0 +1,15 @@
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div><a href="https://www.google.com" class="navbar-brand"><i class="bi bi-google"></i>oogle</a></div>
+        <ul class="navbar-nav">
+            <li *ngIf="this.authenticationService.isLoggedIn"><a routerLink="/" class="nav-link">Home</a></li>
+            <li *ngIf="this.authenticationService.isLoggedIn"><a routerLink="/todo" class="nav-link">Todos</a></li>
+        </ul>
+
+        <ul class="navbar-nav navbar-collapse justify-content-end">
+            <li *ngIf="!this.authenticationService.isLoggedIn"><a routerLink="/login" class="nav-link">Login</a></li>
+            <li *ngIf="this.authenticationService.isLoggedIn"><a routerLink="/logout" class="nav-link">Logout <i class="bi bi-door-open"></i></a></li>
+        </ul>
+
+    </nav>
+</header>

@@ -1,97 +1,120 @@
-<div class="container">
+<div class="container  overflow-hidden">
 
-
-    <div *ngIf="isAPIError" class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Something went wrong!</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-
-    <div *ngIf="!isLoading && companies.length<1" class="d-flex align-items-center justify-content-center"
-        style="height: 450px">
-        There is no tourist company listed yet!
-    </div>
-
-    <div *ngIf="isLoading" class="d-flex align-items-center justify-content-center" style="height: 450px">
-        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-            <span class="visually-hidden">Loading...</span>
+    <div class="row g-3">
+        <div>
+            <form [formGroup]="searchForm" class="row g-3" style="align-items: center;">
+                <div class="col-auto">
+                    <select class="form-select" (change)="changeSearchCriteria($event)" formControlName="criteriaValue">
+                        <option value="" Selected>Choose your Criteria</option>
+                        <option *ngFor="let criteria of searchCriteriaData" [ngValue]="criteria">{{criteria}}</option>
+                      </select>
+                </div>
+                <div class="col-auto">
+                    <input type="text" class="form-control" formControlName="searchValue" maxlength="50" placeholder="Value for search" aria-label="Value for Search">
+                </div>
+                <div class="col-auto" style="margin-bottom: 6px">
+                    <button class="btn btn-primary" style="height: 40px;" (click)="searchCompany()">Search</button>
+                </div>
+                <div class="col-auto" style="margin-bottom: 6px">
+                    <button class="btn btn-danger" style="height: 40px;" (click)="clearInput()">Clear</button>
+                </div>
+              </form>
         </div>
+        
     </div>
+    <div class="row align-items-center gx-5">
 
-    <div class="row row-cols-3 searchBox">
-        <div class="col"></div>
-        <div class="col">
-            <input type="text" class="form-control" placeholder="Search by company name" name="searchText"
-                [(ngModel)]="searchText" (keyup)="searchCompany($any($event.target).value)" />
+        <div class="col-lg-9">
+            <div class="card">
+                <div *ngIf="!isLoading && companies.length<1" class="d-flex align-items-center justify-content-center"
+                    style="height: 450px">
+                    There is no tourist company listed yet!
+                </div>
 
-        </div>
-        <div class="col">
-        </div>
-    </div>
-
-    <div *ngIf="!isLoading && companies.length>0">
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        Company Id
-                    </th>
-                    <th>
-                        website
-                    </th>
-                    <th>
-                        Branch
-                    </th>
-                    <th>
-                        contact
-                    </th>
-                    <th>
-                        email
-                    </th>
-                    <th>
-                        View details
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let company of companies">
-                    <td>{{company.id}}</td>
-                    <td>{{company.website}}</td>
-                    <td>
-                        {{company.place }}
-                    </td>
-                    <td>
-                        {{company.contact }}
-                    </td>
-                    <td>
-                        {{company.email }}
-                    </td>
-                    <td>
-                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
-                            (click)="openTouristPakages(company)" data-bs-target=".multi-collapse" aria-expanded="false"
-                            aria-controls="multiCollapseExample1 multiCollapseExample2">Packages<i
-                                class="bi bi-info-square-fill"></i></button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-
-    <div class="row" *ngIf=" selectedCompany.tariffs.length>0">
-        <div class="card-group">
-            <div class="col" *ngFor="let tariff of selectedCompany.tariffs">
-                <div class="collapse multi-collapse" id="multiCollapseExample1">
-                    <div class="card" style="width: 18rem;">
-                        <img [attr.src]="getImagePath(tariff.place.placeName)" class="card-img-top"
-                            alt="Andaman and Nocobar">
-                        <div class="card-body">
-                            <h5 class="card-title">Package Cost</h5>
-                            <p class="card-text">
-                                {{tariff.cost.toString() | currency:'INR':'symbol':'3.1-1'}}</p>
-                        </div>
+                <div *ngIf="isLoading" class="d-flex align-items-center justify-content-center" style="height: 450px">
+                    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                        <span class="visually-hidden">Loading...</span>
                     </div>
+                </div>
+
+                <div *ngIf="!isLoading && companies.length>0">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Company Names
+                                </th>
+                                <th>
+                                    Website
+                                </th>
+                                <th>
+                                    Contact
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    View details
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let company of companies">
+                                <td>{{company.branchName}}</td>
+                                <td>{{company.website}}</td>
+                                <td>
+                                    {{company.contact }}
+                                </td>
+                                <td>
+                                    {{company.email }}
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                        (click)="openTouristPakages(company)" data-bs-target=".multi-collapse" aria-expanded="false"
+                                        aria-controls="multiCollapseExample1 multiCollapseExample2">Packages</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+        <div class="col-lg-3 text-center text-primary">
+            <div *ngIf="isPackagesLoading" class="d-flex align-items-center justify-content-center" style="height: 250px">
+                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            <div class="card">
+                
+                <table class="table table-hover" *ngIf="!isLoading && !isPackagesLoading && selectedCompany.tariffs.length>0">
+                    <thead>
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    Tourist Place
+                                </th>
+                                <th>
+                                    Cost
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let tariff of selectedCompany.tariffs;let i = index; let l = last">
+                                <td>{{i+1}}</td>
+                                <td>{{tariff.place.placeName}}</td>
+                                <td>
+                                    {{tariff.cost.toString() | currency:'INR':'symbol':'3.1-1'}}
+                                </td>
+                            </tr>
+                        </tbody>
+                </table>
+        </div>
+        </div>
+    
     </div>
+
+</div>

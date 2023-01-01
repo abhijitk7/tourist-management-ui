@@ -25,6 +25,10 @@ export class CompanyService {
     return this.http.get<TouristPlacesResponse>(`${API_URL}/tourism/api/v1/places`);
   }
 
+  searchTouristPlace(criteria:string,criteriaValue:string){
+    return this.http.get<CompanyListResponse>(`${API_URL}/tourism/api/v1/`+criteria+`/`+criteriaValue);
+  }
+
   updateCompanyTariffs(companyDetails:Company){
     return this.http.put<Company>(`${API_URL}/tourism/api/v1/update-tariff/`+companyDetails.id,companyDetails);
   }

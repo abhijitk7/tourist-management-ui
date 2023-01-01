@@ -19,9 +19,11 @@ export class LoginComponent implements OnInit {
   loginForm!:FormGroup;
   isAdmin:Boolean=false;
 
+ 
   constructor(private userService:UserService,private router:Router,private toastService:ToastService,private authenticationService:AuthenticationService) { }
 
   ngOnInit(): void {
+    this.authenticationService.logOut();
     this.loginForm=new FormGroup({
       email:new FormControl('',Validators.required),
       password:new FormControl('',Validators.required)

@@ -9,6 +9,8 @@ import { LoginRequest } from '../models/login.model';
 })
 export class AuthenticationService {
 
+  isLoggedIn:boolean=false;
+
   constructor(private http:HttpClient) { }
 
   login(loginRequest:LoginRequest){
@@ -20,12 +22,14 @@ export class AuthenticationService {
   }
 
 
+
   public isAuthenticated(): boolean {
     const jwtHelper = new JwtHelperService();
     const token = sessionStorage.getItem(TOKEN) as string;
     // Check whether the token is expired and return
     // true or false
-    return !jwtHelper.isTokenExpired(token);
+    this.isLoggedIn=!jwtHelper.isTokenExpired(token);
+    return this.isLoggedIn;
   }
 
   getAuthenticatedUser() {

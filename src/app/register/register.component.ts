@@ -19,6 +19,8 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
+      firstName: new FormControl("", [Validators.required]),
+      lastName: new FormControl("", [Validators.required]),
       companyName: new FormControl("", [Validators.required]),
       place: new FormControl("", [Validators.required]),
       website: new FormControl("", [
@@ -49,6 +51,8 @@ export class RegisterComponent implements OnInit {
   register() {
     console.log("Register method called")
     let company: Company = new Company()
+    company.firstName=this.registerForm.value.firstName
+    company.lastName=this.registerForm.value.lastName
     company.place = this.registerForm.value.place
     company.branchName=this.registerForm.value.companyName
     company.confirmPassword= this.registerForm.value.confirmPassword

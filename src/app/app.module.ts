@@ -12,7 +12,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http"
 import { HttpIntercepterService } from "./service/http/http-intercepter.service";
 import { ToasterComponent } from './toaster/toaster/toaster.component';
-import { ToastComponent } from './toaster/toast/toast.component'
+import { ToastComponent } from './toaster/toast/toast.component';
+import { HeaderComponent } from './header/header.component'
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ToastComponent } from './toaster/toast/toast.component'
     ErrorComponent,
     ToasterComponent,
     ToastComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
